@@ -2,3 +2,6 @@ nc-venv
 _pychache_
 data
 logs
+build
+dist
+nyseconverter.egg-info
