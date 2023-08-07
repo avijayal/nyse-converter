@@ -12,9 +12,16 @@
 # make sure to commit and push changes to remote git repository
 import os
 import glob
+import logging
 from dask import dataframe as dd
 def main():
-    print('File format conversion started')
+    logging.basicConfig(
+    filename='logs/nc.log',
+    level=logging.INFO,
+    format='%(levelname)s %(asctime)s %(message)s',
+    datefmt='%Y-%m-%d %I:%M:%S %p'
+    )
+    logging.info('File format conversion started')
     src_dir = os.environ['SRC_DIR']
     # tgt_dir = os.environ['TGT_DIR']
     src_file_name = glob.glob(f'{src_dir}/NYSE*.txt.gz')
@@ -28,14 +35,14 @@ def main():
                 'high_price', 'close_price', 'volume'],
         blocksize=None
     )
-    print('DataFrame is created and will be written in json format')
+    logging.info('DataFrame is created and will be written in json format')
     df.to_json(
     tgt_file_name,
     orient='records',
     lines=True,
     compression='gzip'
     )
-    print('File format conversion completed')
+    logging.info('File format conversion completed')
 
 if __name__=='__main__':
     main()
